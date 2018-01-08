@@ -1,0 +1,49 @@
+<Configuration>
+
+    <Appenders>
+        <!--添加一个控制台追加器-->
+        <Console name="Console" target="SYSTEM_OUT" follow="true">
+            <PatternLayout>
+                <pattern>[%-5p] %d %c - %m%n</pattern>
+            </PatternLayout>
+        </Console>
+        <!--添加一个文本追加器，文件位于根目录下，名为log.log-->
+        <File name="File" fileName="/tmp/logs/real-log.log">
+            <PatternLayout>
+                <pattern>[%-5p] %d %c - %m%n</pattern>
+            </PatternLayout>
+        </File>
+    </Appenders>
+    <Loggers>
+        <Logger name="cn.wenqi" level="info" />
+        <!--记录 qg.fangrui.boot 包及其子包 debug 及其以上的记录，并输出到文件中-->
+        <Logger name="cn.wenqi" level="info">
+            <!-- AppenderRef 可以控制文件输出对象-->
+            <AppenderRef ref="File" />
+        </Logger>
+        <!--根记录全部输出到控制台上-->
+        <Root level="info">
+            <AppenderRef ref="Console" />
+        </Root>
+    </Loggers>
+
+    <!--<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">-->
+        <!--<encoder>-->
+            <!--<pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>-->
+        <!--</encoder>-->
+    <!--</appender>-->
+
+
+    <!--<File name="log" fileName="/tmp/logs/real-log.log" append="false">-->
+        <!--<PatternLayout pattern="%d{HH:mm:ss.SSS} %-5level %class{36} %L %M - %msg%xEx%n"/>-->
+    <!--</File>-->
+
+    <!--<logger name="cn.wenqi" level="INFO"/>-->
+
+    <!--<root level="DEBUG">-->
+        <!--<appender-ref ref="STDOUT"/>-->
+        <!--<appender-ref ref="flume"/>-->
+        <!--<appender-ref ref="log" />-->
+    <!--</root>-->
+
+</Configuration>
