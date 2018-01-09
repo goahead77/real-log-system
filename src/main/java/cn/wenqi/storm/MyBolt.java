@@ -1,11 +1,13 @@
 package cn.wenqi.storm;
 
+import org.apache.storm.kafka.bolt.KafkaBolt;
 import org.apache.storm.task.OutputCollector;
 import org.apache.storm.task.TopologyContext;
 import org.apache.storm.topology.IRichBolt;
 import org.apache.storm.topology.OutputFieldsDeclarer;
 import org.apache.storm.tuple.Fields;
 import org.apache.storm.tuple.Tuple;
+import org.apache.storm.tuple.Values;
 
 import java.util.Map;
 
@@ -16,7 +18,7 @@ import java.util.Map;
  * @since v1.0.0
  */
 
-public class MyBolt implements IRichBolt {
+public class MyBolt extends KafkaBolt<String,String> {
 
     private OutputCollector outputCollector;
 
@@ -29,6 +31,7 @@ public class MyBolt implements IRichBolt {
     public void execute(Tuple tuple) {
         String content=tuple.getString(0);
         System.out.println("content is :"+ content);
+        outputCollector.emit(new Values(content));
     }
 
     @Override
