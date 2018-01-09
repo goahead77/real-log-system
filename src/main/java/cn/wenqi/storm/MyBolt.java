@@ -1,5 +1,10 @@
 package cn.wenqi.storm;
 
+import com.alibaba.fastjson.JSON;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.apache.kafka.common.protocol.types.Field;
 import org.apache.storm.topology.BasicOutputCollector;
 import org.apache.storm.topology.OutputFieldsDeclarer;
 import org.apache.storm.topology.base.BaseBasicBolt;
@@ -20,9 +25,11 @@ public class MyBolt extends BaseBasicBolt {
 
     @Override
     public void execute(Tuple tuple, BasicOutputCollector basicOutputCollector) {
-        String content=tuple.getString(0);
-        System.out.println("value is :"+ content);
-        basicOutputCollector.emit(new Values(content));
+        String topic=tuple.getString(0);
+        String value=tuple.getString(4);
+        String result= JSON.toJSONString( new Msg(topic,value));
+        System.out.println("result is:"+result);
+        basicOutputCollector.emit(new Values(result));
     }
 
     @Override
@@ -40,5 +47,13 @@ public class MyBolt extends BaseBasicBolt {
     @Override
     public Map<String, Object> getComponentConfiguration() {
         return null;
+    }
+
+    @Data
+    @NoArgsConstructor
+    @AllArgsConstructor
+    private class Msg{
+        private String topic;
+        private String value;
     }
 }
