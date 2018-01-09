@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
  * @author wenqi
  * @since v1.0.0
  */
-@Component
+//@Component
 public class LogListener {
 
     @KafkaListener(topics = "log")
